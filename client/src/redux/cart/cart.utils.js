@@ -29,3 +29,19 @@ export const removeItemFromCart = (cartItems, cartItemToRemove) => {
       : cartItem
   );
 };
+
+export const mergeCartItems = (existingItems, newItems) => {
+  console.log(existingItems, "existingItems");
+  console.log(newItems, "newItems");
+
+  if (newItems) {
+    const finalItems = existingItems.reduce(
+      (acc, curr) => addItemToCart(acc, curr),
+      newItems
+    );
+    console.log(finalItems, "Final");
+    return finalItems;
+  } else {
+    return existingItems;
+  }
+};

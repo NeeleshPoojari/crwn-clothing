@@ -10,6 +10,7 @@ import {
 import {
   signInSuccess,
   signInFailure,
+  sessionSuccess,
   signOutSuccess,
   signOutFailure,
   signUpSuccess,
@@ -47,7 +48,9 @@ export function* isUserAuthenticated() {
   try {
     const userAuth = yield getCurrentUser();
     if (!userAuth) return;
-    yield getSnapshotFromUserAuth(userAuth);
+    const userRef = yield call(createUserProfileDocument, userAuth);
+    const userSnapshots = yield userRef.get();
+    yield put(sessionSuccess({ id: userSnapshots.id, ...userSnapshots.data() }));
   } catch (error) {
     yield put(signInFailure(error));
   }

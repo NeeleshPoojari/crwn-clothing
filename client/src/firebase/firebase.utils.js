@@ -39,6 +39,31 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
   return userRef;
 };
+
+export const updateCurrentUserCart = (CurrentUser, cartItems) => {
+  console.log(CurrentUser,"CurrentUser in util");
+  console.log(cartItems,"CartItems in util");
+
+  if(CurrentUser) {
+    const userCollectionRef = firestore.doc(`users/${CurrentUser.id}`)
+    userCollectionRef.update({cartItems} );
+  }
+  
+}
+
+export const getCurrentUserCartData = async (CurrentUser) => {
+  console.log("Called inside fireutilstore")
+  const userCollectionRef = firestore.doc(`users/${CurrentUser.id}`)
+  const userSnap =  await userCollectionRef.get();
+  
+   if(userSnap) {
+     return userSnap.data().cartItems;
+   } else {
+     return [];
+   }
+  
+}
+
 export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
   const collectionRef = firestore.collection(collectionKey);
 

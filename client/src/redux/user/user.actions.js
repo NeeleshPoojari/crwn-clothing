@@ -19,6 +19,11 @@ export const signInSuccess = (user) => ({
   payload: user
 });
 
+export const sessionSuccess = (user) => ({
+  type: UserActionTypes.SESSION_SUCCESS,
+  payload: user
+});
+
 export const signInFailure = (error) => ({
   type: UserActionTypes.SIGN_IN_FAILURE,
   payload: error

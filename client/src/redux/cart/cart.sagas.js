@@ -22,9 +22,9 @@ export function* onSignOutSuccess() {
 }
 
 export function* updateUserCart() {
-  console.log("called Cartsaga function");
   const CurrentUser = yield select(selectCurrentUser);
   const CurrentCartData = yield select(selectCartItems);
+  console.log("CURRENT CART:::", CurrentCartData);
   yield call(updateCurrentUserCart, CurrentUser, CurrentCartData);
 }
 
@@ -32,6 +32,7 @@ export function* getUserCartItems() {
   
   const CurrentUser = yield select(selectCurrentUser);
   const currentUsercartItems = yield call(getCurrentUserCartData, CurrentUser);
+
   yield put(updateUserCartAction(currentUsercartItems));
 
 }
@@ -41,7 +42,8 @@ export function* OnCurrentUserCartChange() {
     [
       CartActionTypes.ADD_ITEM,
       CartActionTypes.REMOVE_ITEM,
-      CartActionTypes.CLEAR_ITEM_FROM_CART
+      CartActionTypes.CLEAR_ITEM_FROM_CART,
+      CartActionTypes.UPDATE_USER_CART
     ],
     updateUserCart
   );
